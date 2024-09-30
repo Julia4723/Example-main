@@ -47,7 +47,6 @@ class ViewController: UIViewController {
         imageContainerView.frame = CGRect(x: 200, y: 130, width: 100, height: 200)
         imageContainerView.backgroundColor = .white
         imageContainerView.layer.cornerRadius = 20
-
         imageContainerView.layer.shadowColor = UIColor.black.cgColor
         imageContainerView.layer.shadowOpacity = 0.2
         imageContainerView.layer.shadowRadius = 16
