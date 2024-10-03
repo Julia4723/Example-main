@@ -21,14 +21,16 @@ class ViewController: UIViewController {
         
         updateNumbers()
         setupViewImg()
-        setupView()
         setupLabel()
         setupImageView()
         
-        
         view.addSubview(textLabel)
-        view.addSubview(imageView)
         view.addSubview(imageContainerView)
+        imageContainerView.addSubview(imageView)
+        
+        setupView()
+        setupLayout()
+           
     }
     
     private func updateNumbers() {
@@ -40,27 +42,25 @@ class ViewController: UIViewController {
         textLabel.text = "\(firstNumber ?? 0)"
         textLabel.font = .systemFont(ofSize: 30, weight: .bold)
         textLabel.textColor = .red
-        textLabel.frame = CGRect(x: 30, y: 30, width: 100, height: 50)
+//        textLabel.frame = CGRect(x: 30, y: 30, width: 100, height: 50)
     }
     
     private func setupViewImg() {
-        imageContainerView.frame = CGRect(x: 200, y: 130, width: 100, height: 200)
-        imageContainerView.backgroundColor = .white
+//        imageContainerView.frame = CGRect(x: 200, y: 130, width: 100, height: 200)
         imageContainerView.layer.cornerRadius = 20
         imageContainerView.layer.shadowColor = UIColor.black.cgColor
         imageContainerView.layer.shadowOpacity = 0.2
-        imageContainerView.layer.shadowRadius = 16
-        imageContainerView.layer.shadowOffset = CGSize(width: 5, height: 5)
+        imageContainerView.layer.shadowRadius = 32
+        imageContainerView.layer.shadowOffset = CGSize(width: 12, height: 12)
     }
     
     
     private func setupImageView() {
         imageView.image = UIImage(named: "raccoon")
-        imageView.frame = CGRect(x: 30, y: 130, width: 100, height: 200)
-        imageView.layer.shadowColor = UIColor.black.cgColor
-        imageView.layer.shadowOffset = CGSize(width: 15, height: 15)
-        imageView.layer.shadowOpacity = 1
-        imageView.layer.shadowRadius = 10
+        imageView.frame = imageContainerView.bounds
+        imageView.layer.cornerRadius = 20
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
     }
     
     private func setupView() {
@@ -70,8 +70,29 @@ class ViewController: UIViewController {
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 1, y: 1)
         
-        //        //Добавляем подслой к супервью
-        //        view.layer.insertSublayer(gradient, at: 0)  // Градиент на фоне супервью
+        //Добавляем подслой к супервью
+        view.layer.insertSublayer(gradient, at: 0)  // Градиент на фоне супервью
+    }
+    
+    private func setupLayout() {
+        textLabel.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageContainerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            textLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            textLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            imageContainerView.topAnchor.constraint(equalTo: textLabel.bottomAnchor, constant: 150),
+            imageContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageContainerView.heightAnchor.constraint(equalToConstant: 200),
+            imageContainerView.widthAnchor.constraint(equalToConstant: 200),
+            
+            imageView.topAnchor.constraint(equalTo: imageContainerView.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: imageContainerView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: imageContainerView.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: imageContainerView.bottomAnchor),
+        ])
     }
 }
 
