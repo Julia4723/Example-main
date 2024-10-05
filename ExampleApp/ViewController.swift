@@ -45,6 +45,7 @@ class ViewController: UIViewController {
 //        textLabel.frame = CGRect(x: 30, y: 30, width: 100, height: 50)
     }
     
+    
     private func setupViewImg() {
 //        imageContainerView.frame = CGRect(x: 200, y: 130, width: 100, height: 200)
         imageContainerView.layer.cornerRadius = 20
